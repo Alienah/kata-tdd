@@ -8,17 +8,26 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-    <div style="border:1px solid red">
-        <div class="trivial">
-            <form name="form__container" id="form_answers-container">
-                <h2 id="question__title" style="text-align:center; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"></h2>
-                <ul id="answers-list"></ul>          
-            </form>
-            <p class="message--result"></p>
+    <header>
+        <h1>Saber y Ganar Game</h1>
+    </header>
+    <main>
+        <div>
+            <p>Explicación del juego. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint ipsam iste accusantium ullam molestias praesentium ratione sequi, expedita molestiae qui repellendus eos quidem possimus earum impedit pariatur soluta tenetur officiis.</p>
         </div>
-        <button type="button" id="btn-send">Enviar resultados</button>
-        <button type="button" id="btn-next" class="btn--next">Siguiente pregunta</button>
-    </div>
+        <button type="button" id="btn-start">Empezar</button>
+        <div id="game__container" style="border:1px solid red">
+            <div class="trivial">
+                <form name="form__container" id="form_answers-container">
+                    <h2 id="question__title" style="text-align:center; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"></h2>
+                    <ul id="answers-list"></ul>
+                </form>
+                <p class="message--result"></p>
+            </div>
+            <button type="button" id="btn-send">Enviar resultados</button>
+            <button type="button" id="btn-next" class="btn--next">Siguiente pregunta</button>
+        </div>
+    </main>   
 
     <script src="js/main.js">
     

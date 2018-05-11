@@ -1,6 +1,8 @@
 const app = (function (){
     let questions = [];
     let questionObtained;
+    let btnStart;
+    let gameContainer;
     let btnNext;
     let btnSend;
     let seconds;
@@ -8,6 +10,31 @@ const app = (function (){
     let score;
     let inputValueOfAnswer;
     let correctAnswerId;
+
+    const startApp = () => {
+        seconds = 0;
+        timer = null;
+        score = 0;
+        btnStart = document.getElementById('btn-start');
+        btnStart.addEventListener('click', onStartGame);
+        gameContainer = document.getElementById('game__container');
+        gameContainer.classList.add('hide');
+        btnNext = document.getElementById('btn-next');
+        btnNext.disabled = true;
+        btnNext.addEventListener('click', goToNextQuestion);
+        btnSend = document.getElementById('btn-send');
+        btnSend.disabled = true;
+        document.form__container.addEventListener('click', handleEventsOfRadios);
+
+        getQuestions(function (data) {
+            questions = data;            
+        });        
+    };
+
+    const onStartGame = () => {        
+        paintQuestions(giveQuestionObtained());
+        startTimer();
+    };
 
     const getQuestions = callback => {
         const serverData = [
@@ -104,6 +131,7 @@ const app = (function (){
     };
 
     const paintQuestions = (questionObtained) => {
+        gameContainer.classList.add('show');
         const titleOfQuestionObtained = questionObtained.question.text;
         const answersOfQuestionObtained = questionObtained.answers;
         const idOfQuestionObtained = questionObtained.question.id;
@@ -125,6 +153,7 @@ const app = (function (){
     const changeUIWhenNoMoreQuestions = () => {
         document.querySelector('.trivial').classList.add('hide');
         document.querySelector('.btn--next').classList.add('hide');
+        btnSend.disabled = false;
     };
 
     const compareAnswers = (answerCorrect, answerOfUser) => {
@@ -270,25 +299,6 @@ const app = (function (){
 
     const resetAnswerTimer = () => {
         seconds = 0;
-    };
-
-    const startApp = () => {
-        seconds = 0;
-        timer = null;
-        score = 0;
-        btnNext = document.getElementById('btn-next');
-        btnNext.disabled = true;
-        btnNext.addEventListener('click', goToNextQuestion);
-        btnSend = document.getElementById('btn-send');        
-        btnSend.disabled = true;
-        document.form__container.addEventListener('click', handleEventsOfRadios);
-        
-        getQuestions(function (data) {
-            questions = data;
-            startTimer();
-        });
-        
-        paintQuestions(giveQuestionObtained());        
     };
 
     return {
