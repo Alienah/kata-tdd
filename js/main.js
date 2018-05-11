@@ -141,14 +141,27 @@ const app = (function (){
         correctAnswerId = questionObtained.correctAnswerId;
     };
 
-    const getResultOfComparation = () => {
+    const getResultOfComparation = (onShowScoreWhenIsCorrect, onShowScoreWhenIsIncorrect) => {
         if(compareAnswers(inputValueOfAnswer, correctAnswerId)) {
             showMsgWhenIsCorrect();
-            showScore(recalculateScoreWhenIsCorrect);
+            onShowScoreWhenIsCorrect();
         } else if (!compareAnswers(inputValueOfAnswer, correctAnswerId)) {
             showMsgWhenIsIncorrect();
-            showScore(recalculateScoreWhenIsIncorrect);
+            onShowScoreWhenIsIncorrect();
+            
         }      
+    };
+
+    const showScoreWhenIsCorrect = () => {
+        showScore(recalculateScoreWhenIsCorrect);
+    };
+
+    const showScoreWhenIsIncorrect = () => {
+        showScore(recalculateScoreWhenIsIncorrect);
+    };
+
+    const showScoreWhenNoAnswer = () => {
+        showScore(recalculateScoreWhenNoAnswer);
     };
 
     const preventNextQuestion = (targetRadio) => {
@@ -213,52 +226,39 @@ const app = (function (){
     };
 
     const doBeforeNextQuestion = () => {
-        getResultOfComparation();
+        getResultOfComparation(showScoreWhenIsCorrect, showScoreWhenIsIncorrect);
         updateUI();
         resetAnswerTimer();
     };
 
     const goToNextQuestion = () => {
-    doBeforeNextQuestion();
+        doBeforeNextQuestion();
     };
 
     //Funciones de temporizador
     const startTimer = () => {
         if (!timer) {
-            timer = setInterval(updateTimer, 1000);
+            timer = setInterval(function () {updateTimer(onNextQuestion);}, 1000);
         }
     };
 
-    //Refactorizar
-    //timer = setInterval(function () {setTimeAndConditions(paintQuestions);}, 1000);
-    const updateTimer = () => {
+    const updateTimer = (onTimeOut) => {
         seconds++;
         console.log(seconds);            
             if (seconds > 5) {
-                onNextQuestion();
-                showScore(recalculateScoreWhenNoAnswer);
-                // paintQuestions(giveQuestionObtained());
+                onTimeOut();                
                 resetAnswerTimer();
-            }
-            // else if (seconds > 5) {
-            //     stopTimer();
-            //     // changeUIWhenNoMoreQuestions();
-            // }
-        
+            }       
     };
 
     const onNextQuestion = () => {
         updateUI();
+        updateScore();   
     };
 
-    // const ifNoAnswer = () => {
-    //     updateUI();
-    // };
-
-    const updateCountdown = () => {
-        seconds++;
-        console.log(seconds);
-    }
+    const updateScore = () => {
+        showScoreWhenNoAnswer();
+    };
 
     const stopTimer = () => {
         if (timer) {
