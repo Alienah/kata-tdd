@@ -206,6 +206,7 @@ const app = (function (){
             paintQuestions(giveQuestionObtained());
         } else {
             changeUIWhenNoMoreQuestions();
+            stopTimer();
         }
         btnNext.disabled = true;
         console.log(`Tiempo transcurrido ${seconds} segundos`);
@@ -224,31 +225,39 @@ const app = (function (){
     //Funciones de temporizador
     const startTimer = () => {
         if (!timer) {
-            timer = setInterval(setTimeAndConditions, 1000);
+            timer = setInterval(updateTimer, 1000);
         }
     };
 
     //Refactorizar
     //timer = setInterval(function () {setTimeAndConditions(paintQuestions);}, 1000);
-
-    const setTimeAndConditions = () => {
+    const updateTimer = () => {
         seconds++;
-        console.log(seconds);
-        if (btnNext.disabled === true) {
-            if (questions.length > 0 && seconds > 5) {
+        console.log(seconds);            
+            if (seconds > 5) {
+                onNextQuestion();
                 showScore(recalculateScoreWhenNoAnswer);
-                paintQuestions(giveQuestionObtained());
+                // paintQuestions(giveQuestionObtained());
                 resetAnswerTimer();
             }
-            else if (questions.length === 0 && seconds > 5) {
-                stopTimer();
-                changeUIWhenNoMoreQuestions();
-            }
-        }
+            // else if (seconds > 5) {
+            //     stopTimer();
+            //     // changeUIWhenNoMoreQuestions();
+            // }
+        
     };
 
+    const onNextQuestion = () => {
+        updateUI();
+    };
+
+    // const ifNoAnswer = () => {
+    //     updateUI();
+    // };
+
     const updateCountdown = () => {
-        
+        seconds++;
+        console.log(seconds);
     }
 
     const stopTimer = () => {
