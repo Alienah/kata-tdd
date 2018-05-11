@@ -10,10 +10,22 @@
 <body>
     <header>
         <h1>Saber y Ganar Game</h1>
+        <nav>
+            <a id="" href="#explanation-container">Instrucciones</a>
+        </nav>
     </header>
     <main>
-        <div>
-            <p>Explicación del juego. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint ipsam iste accusantium ullam molestias praesentium ratione sequi, expedita molestiae qui repellendus eos quidem possimus earum impedit pariatur soluta tenetur officiis.</p>
+        <div id="explanation-container">
+            <p>Bienvenido a este divertido juego llamado "Saber y Ganar" en honor al programa de Jordi Hurtado.</p>
+            <ul>La mecánica del juego es muy sencilla: 
+                <li>Van a aparecer varias preguntas con multiples respuestas y tienes que seleccionar la correcta.</li>
+                <li>Si aciertas y respondes en menos de 3 segundos, recibirás 2 puntos.</li>
+                <li>Si aciertas y respondes entre 3 y 10 segundos, recibirás 1 punto. </li>
+                <li>Si aciertas y respondes entre 10 y 20 segundos, no recibes ningún punto, pero tampoco te restará.</li>
+                <li>Si fallas y respondes en menos de 10 segundos, te restará sólo 1 punto.</li>
+                <li>Si fallas y respondes entre 10 y 20 segundos, te restará 2 puntos.</li>
+                <li>Es importante que respondas, aunque sea fallida, porque si no respondes en menos de 20 segundos, saltará a la siguiente pregunta y te restará 3 puntazos!</li>
+            </ul>
         </div>
         <button type="button" id="btn-start">Empezar</button>
         <div id="game__container" style="border:1px solid red">

@@ -121,19 +121,21 @@ const app = (function (){
         callback(serverData);
     };
 
+    //Darle Vuelta
     const getQuestionRamdon = () => {
         const randomPosition = Math.floor(Math.random()* questions.length);
         let questionToGet = questions[randomPosition];
-        updateQuestionsArray(randomPosition);
+        removeVisitedQuestion(randomPosition);
         return questionToGet;
     };
 
+    //Darle vuelta
     const giveQuestionObtained = () => {
         questionObtained = getQuestionRamdon();
         return questionObtained;
     };
 
-    const updateQuestionsArray = (randomPosition) => {
+    const removeVisitedQuestion = (randomPosition) => {
         questions.splice(randomPosition, 1);
     };
 
@@ -165,13 +167,8 @@ const app = (function (){
         btnSend.disabled = false;
     };
 
-    const compareAnswers = (answerCorrect, answerOfUser) => {
-        if (answerCorrect == answerOfUser) {
-            return true;      
-        }
-        if (answerCorrect != answerOfUser) {            
-            return false;
-        }
+    const isAnswerCorrect = (answerCorrect, answerOfUser) => {
+        return (answerCorrect == answerOfUser);     
     };
 
     const getValuesToCompare = (target) => {    
@@ -179,23 +176,14 @@ const app = (function (){
         correctAnswerId = questionObtained.correctAnswerId;
     };
 
-    const getResultOfComparation = (onShowScoreWhenIsCorrect, onShowScoreWhenIsIncorrect) => {
-        if(compareAnswers(inputValueOfAnswer, correctAnswerId)) {
+    const getResultOfComparation = () => {
+        if(isAnswerCorrect(inputValueOfAnswer, correctAnswerId)) {
             showMsgWhenIsCorrect();
-            onShowScoreWhenIsCorrect();
-        } else if (!compareAnswers(inputValueOfAnswer, correctAnswerId)) {
+            showScore(recalculateScoreWhenIsCorrect);
+        } else {
             showMsgWhenIsIncorrect();
-            onShowScoreWhenIsIncorrect();
-            
+            showScore(recalculateScoreWhenIsIncorrect);            
         }      
-    };
-
-    const showScoreWhenIsCorrect = () => {
-        showScore(recalculateScoreWhenIsCorrect);
-    };
-
-    const showScoreWhenIsIncorrect = () => {
-        showScore(recalculateScoreWhenIsIncorrect);
     };
 
     const showScoreWhenNoAnswer = () => {
@@ -290,7 +278,7 @@ const app = (function (){
     };
 
     const doBeforeNextQuestion = () => {
-        getResultOfComparation(showScoreWhenIsCorrect, showScoreWhenIsIncorrect);
+        getResultOfComparation();
         updateUI();
         resetAnswerTimer();
     };
