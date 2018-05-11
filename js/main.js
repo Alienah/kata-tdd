@@ -34,16 +34,14 @@ const app = (function (){
         });        
     };
 
-    const resetQuestions = () => {
-        getQuestions(function (data) {
-            questions = data;
-        });  
-    };
-
-    const onStartGame = () => {        
-        paintQuestions(giveQuestionObtained());
+    const onStartGame = () => {
+        showGameInterface();
         startTimer();
     };
+
+    const showGameInterface = () => {
+        paintQuestions(giveQuestionObtained());
+    }; 
 
     const getQuestions = callback => {
         const serverData = [
@@ -224,6 +222,7 @@ const app = (function (){
 
     const showMsgWhenIsIncorrect = () => console.log('Incorrecto!'); 
 
+    //Recalcular marcador
     const recalculateScoreWhenIsCorrect = (score, seconds) => {
         if (seconds <= 2) {
             return score + 2;
@@ -254,27 +253,6 @@ const app = (function (){
         return console.log(`La puntuación es ${score}`);
     };
 
-    const updateUI = () => {
-        if (questions.length > 0) {
-            paintQuestions(giveQuestionObtained());
-        } else {
-            changeUIWhenNoMoreQuestions();
-            stopTimer();
-        }
-        btnNext.disabled = true;
-        console.log(`Tiempo transcurrido ${seconds} segundos`);
-    };
-
-    const doBeforeNextQuestion = () => {
-        getResultOfComparation(showScoreWhenIsCorrect, showScoreWhenIsIncorrect);
-        updateUI();
-        resetAnswerTimer();
-    };
-
-    const goToNextQuestion = () => {
-        doBeforeNextQuestion();
-    };
-
     //Funciones de temporizador
     const startTimer = () => {
         if (!timer) {
@@ -296,8 +274,29 @@ const app = (function (){
         updateScore();   
     };
 
+    const updateUI = () => {
+        if (questions.length > 0) {
+            showGameInterface();
+        } else {
+            changeUIWhenNoMoreQuestions();
+            gameOver();
+        }
+        btnNext.disabled = true;
+        console.log(`Tiempo transcurrido ${seconds} segundos`);
+    };
+
     const updateScore = () => {
         showScoreWhenNoAnswer();
+    };
+
+    const doBeforeNextQuestion = () => {
+        getResultOfComparation(showScoreWhenIsCorrect, showScoreWhenIsIncorrect);
+        updateUI();
+        resetAnswerTimer();
+    };
+
+    const goToNextQuestion = () => {
+        doBeforeNextQuestion();
     };
 
     const stopTimer = () => {
@@ -308,8 +307,18 @@ const app = (function (){
         resetAnswerTimer();
     };
 
+    const gameOver = () => {
+        stopTimer();
+    };
+
     const resetAnswerTimer = () => {
         seconds = 0;
+    };
+
+    const resetQuestions = () => {
+        getQuestions(function (data) {
+            questions = data;
+        });
     };
 
     return {
