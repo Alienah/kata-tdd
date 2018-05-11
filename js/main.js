@@ -3,6 +3,7 @@ const app = (function (){
     let questionObtained;
     let btnStart;
     let gameContainer;
+    let questionsContainer;
     let btnNext;
     let btnSend;
     let seconds;
@@ -19,16 +20,24 @@ const app = (function (){
         btnStart.addEventListener('click', onStartGame);
         gameContainer = document.getElementById('game__container');
         gameContainer.classList.add('hide');
+        questionsContainer = document.querySelector('.trivial');
         btnNext = document.getElementById('btn-next');
         btnNext.disabled = true;
         btnNext.addEventListener('click', goToNextQuestion);
         btnSend = document.getElementById('btn-send');
         btnSend.disabled = true;
+        btnSend.addEventListener('click', resetQuestions);
         document.form__container.addEventListener('click', handleEventsOfRadios);
 
         getQuestions(function (data) {
             questions = data;            
         });        
+    };
+
+    const resetQuestions = () => {
+        getQuestions(function (data) {
+            questions = data;
+        });  
     };
 
     const onStartGame = () => {        
@@ -132,6 +141,8 @@ const app = (function (){
 
     const paintQuestions = (questionObtained) => {
         gameContainer.classList.add('show');
+        questionsContainer.classList.remove('hide');
+        btnNext.classList.remove('hide');
         const titleOfQuestionObtained = questionObtained.question.text;
         const answersOfQuestionObtained = questionObtained.answers;
         const idOfQuestionObtained = questionObtained.question.id;
@@ -151,8 +162,8 @@ const app = (function (){
     };
 
     const changeUIWhenNoMoreQuestions = () => {
-        document.querySelector('.trivial').classList.add('hide');
-        document.querySelector('.btn--next').classList.add('hide');
+        questionsContainer.classList.add('hide');
+        btnNext.classList.add('hide');
         btnSend.disabled = false;
     };
 
