@@ -65,10 +65,7 @@ describe('comprobador de respuestas', function() {
         que pregunta sea string */
 
         function checkObject(question){
-            return typeof question.correct === 'number' 
-                && question.answers instanceof Array 
-                && typeof question.question === 'string' 
-                && question.answers.length === 3;       
+            return typeof question.correct === 'number' && question.answers instanceof Array && typeof question.question === 'string' && question.answers.length === 3;       
         }
         var questionTestTwo = {
             question : '¿Capital de Honduras?',
@@ -87,46 +84,46 @@ describe('comprobador de respuestas', function() {
 describe('calculo de marcador', function(){
     // funcion true
     // funcion false
-    function recalcularNoContesta(puntos, tiempo){
-        if (tiempo === ''){
-            return puntos - 2;
+    function recalculateWhenNoAnswer(score, seconds){
+        if (seconds === ''){
+            return score - 2;
         }
-        if (tiempo > 20){
-            return puntos - 3;
-        }
-    }
-
-    function recalcularMarcadorAcierto(puntos, tiempo){
-        if (tiempo <= 2){
-            return puntos + 2;
-        }
-        if (tiempo >= 2 && tiempo < 10){
-            return ++puntos;
-        }
-        if (tiempo > 10){
-            return puntos;
+        if (seconds > 20){
+            return score - 3;
         }
     }
 
-    function recalcularMarcadorFallo(puntos, tiempo){
-        if (tiempo > 10){
-            return puntos - 2;
+    function recalculateScoreWhenIsCorrect(score, seconds){
+        if (seconds <= 2){
+            return score + 2;
         }
-        if (tiempo <= 10){
-            return puntos - 1;
+        if (seconds >= 2 && seconds < 10){
+            return ++score;
+        }
+        if (seconds > 10){
+            return score;
+        }
+    }
+
+    function recalculateScoreWhenIsIncorrect(score, seconds){
+        if (seconds > 10){
+            return score - 2;
+        }
+        if (seconds <= 10){
+            return score - 1;
         }
     }
 
     it("suma mas puntos si acierta muy rapido en menos de 2 segundos", function(){
-        expect(recalcularMarcadorAcierto(0, 1)).toBe(2);
+        expect(recalculateScoreWhenIsCorrect(0, 1)).toBe(2);
     });
 
     it("suma 1 punto si acierta entre 2 y 10 segundos", function(){
-        expect(recalcularMarcadorAcierto(3, 3)).toBe(4);
+        expect(recalculateScoreWhenIsCorrect(3, 3)).toBe(4);
     });
 
     it("suma 0 puntos si acierta en más de 10 segundos", function(){
-        expect(recalcularMarcadorAcierto(10, 15)).toBe(10);
+        expect(recalculateScoreWhenIsCorrect(10, 15)).toBe(10);
     });
 
     // it("Si no se responde no se puede seguir", function(){
@@ -134,14 +131,14 @@ describe('calculo de marcador', function(){
     // });
 
     it("Si en 20 segundos no has respondido, pasa a siguiente pregunta", function(){
-        expect(recalcularNoContesta(3, 21)).toBe(0);
+        expect(recalculateWhenNoAnswer(3, 21)).toBe(0);
     }); 
 
     it("Si fallas en mas de 10 segundos pierdes puntos", function(){
-        expect(recalcularMarcadorFallo(3, 21)).toBe(1);
+        expect(recalculateScoreWhenIsIncorrect(3, 21)).toBe(1);
     });
 
     it("Si fallas en menos de 10 segundos pierdes puntos", function(){
-        expect(recalcularMarcadorFallo(0, 9)).toBe(-1);
+        expect(recalculateScoreWhenIsIncorrect(0, 9)).toBe(-1);
     });
 });

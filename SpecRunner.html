@@ -12,7 +12,7 @@
   <script src="lib/jasmine-3.1.0/boot.js"></script>
 
   <!-- include source files here... NUESTRO CODIGO-->
-  <!-- <script src="main.js"></script> -->
+  <!-- <script src="js/main.js"></script> -->
 
   <!-- include spec files here...  TEST-->
   <script src="spec/AppSpec.js"></script>
@@ -23,11 +23,15 @@
     
 <h1>KATA VELOCIDAD TIEMPO</h1>
 
-<div class="trivial" style="width:50%; margin:0 auto; background-color:#eee; border:1px solid #999">
-    <h2 id="preguntas"></h2>
-   <div id="respuestas"></div>
-    <p class="mensaje"></p>
+<div class="trivial" style="border:1px solid red">
+  <h2 id="preguntas" style="text-align:center; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"></h2>
+  <form name="miformulario" id="respuestas">
+    <ul id="listaRespuestas"></ul>
+    <button type="button" id="btn-next">Siguiente</button>
+  </form>
+  <p class="mensaje"></p>
 </div>
+<script src="js/main.js"></script>
   
 </body>
 </html>
