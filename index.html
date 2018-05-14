@@ -28,17 +28,33 @@
             </ul>
         </div>
         <button type="button" id="btn-start">Empezar</button>
-        <div id="game__container" style="border:1px solid red">
-            <div class="trivial">
-                <form name="form__container" id="form_answers-container">
-                    <h2 id="question__title" style="text-align:center; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"></h2>
-                    <ul id="answers-list"></ul>
-                </form>                
+        <div>
+            <div id="game__container" style="border:1px solid red">
+                <div class="trivial">
+                    <form name="form__container" id="form_answers-container">
+                        <h2 id="question__title" style="text-align:center; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"></h2>
+                        <ul id="answers-list"></ul>
+                    </form>
+                </div>
+                <p id="msg-result" class="message--result"></p>
+                <button type="button" id="btn-send">Enviar resultados</button>
+                <button type="button" id="btn-next" class="btn--next">Siguiente pregunta</button>
             </div>
-            <p id="msg-result" class="message--result"></p>
-            <button type="button" id="btn-send">Enviar resultados</button>
-            <button type="button" id="btn-next" class="btn--next">Siguiente pregunta</button>
+            <div class="score__container">
+                <table class="score__table"> <h2>Puntuaciones</h2>
+                    <tr class="score__table--player">
+                        <td class="player__name">Daniela</td>
+                        <td class="player__score">2 puntos</td>
+                    </tr>
+                    <tr class="score__table--player">
+                        <td class="player__name">Aida</td>
+                        <td class="player__score">2 puntos</td>
+                    </tr>
+                </table>
+            </div>
         </div>
+        
+
     </main>   
 
     <script src="js/main.js">

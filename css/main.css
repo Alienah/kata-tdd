@@ -10,3 +10,15 @@
 .msg--incorrect {
     color: red;
 }
+.score__table {
+   min-width: 30%;
+   border: 1px solid #000;
+   border-spacing: 0;
+   border-collapse: collapse;
+}
+.score__table--player td {
+   min-width: 25%;
+   padding: 5px;
+   text-align: left;
+   border: 1px solid #000;   
+}

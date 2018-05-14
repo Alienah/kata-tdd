@@ -20,7 +20,7 @@ const app = (function (){
         btnStart = document.getElementById('btn-start');
         btnStart.addEventListener('click', onStartGame);
         gameContainer = document.getElementById('game__container');
-        gameContainer.classList.add('hide');
+        // gameContainer.classList.add('hide');
         questionsContainer = document.querySelector('.trivial');
         msgResult = document.getElementById('msg-result');
         btnNext = document.getElementById('btn-next');
@@ -28,12 +28,13 @@ const app = (function (){
         btnNext.addEventListener('click', goToNextQuestion);
         btnSend = document.getElementById('btn-send');
         btnSend.disabled = true;
-        btnSend.addEventListener('click', resetQuestions);
+        btnSend.addEventListener('click', recapGame);
         document.form__container.addEventListener('click', handleEventsOfRadios);
 
         getQuestions(function (data) {
             questions = data;            
-        });        
+        });
+        gameUInotShowed();        
     };
 
     const onStartGame = () => {
@@ -317,6 +318,15 @@ const app = (function (){
         getQuestions(function (data) {
             questions = data;
         });
+    };
+
+    const gameUInotShowed = () => {
+        gameContainer.classList.add('hide');
+    };
+
+    const recapGame = () => {
+        resetQuestions();
+        gameUInotShowed();
     };
 
     return {
