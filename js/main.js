@@ -27,7 +27,6 @@ const app = (function (){
         btnStart = document.getElementById('btn-start');
         btnStart.addEventListener('click', onStartGame);
         gameContainer = document.getElementById('game__container');
-        // gameContainer.classList.add('hide');
         questionsContainer = document.querySelector('.trivial');
         msgResult = document.getElementById('msg-result');
         btnNext = document.getElementById('btn-next');
@@ -50,6 +49,7 @@ const app = (function (){
     };
 
     const onStartGame = () => {
+        hideStatistics();
         showGameInterface();
         startTimer();
     };
@@ -355,6 +355,17 @@ const app = (function (){
         playerIncorrectNumber.innerHTML = numberOfIncorrects;
     };
 
+    const resetStatistics = () => {
+        playerTimeTotal = 0;
+        numberOfCorrects = 0;
+        numberOfIncorrects = 0;
+    };
+
+    const hideStatistics = () => {
+        statisticsContainer.classList.remove('show');
+        statisticsContainer.classList.add('hide');
+    };
+
     const gameUInotShowed = () => {
         gameContainer.classList.remove('show');
         gameContainer.classList.add('hide');
@@ -364,6 +375,7 @@ const app = (function (){
         showStatistics();
         resetQuestions();
         gameUInotShowed();
+        resetStatistics();
     };
 
     return {
