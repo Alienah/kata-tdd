@@ -2,6 +2,9 @@ const app = (function (){
     let records;
     let questions = [];
     let questionObtained;
+    let linkToIntro;
+    let introContainer;
+    let btnHide;
     let btnStart;
     let gameContainer;
     let questionsContainer;
@@ -27,16 +30,23 @@ const app = (function (){
         seconds = 0;
         timer = null;
         score = 0;
+        linkToIntro = document.querySelector('.link-to-explanation');
+        linkToIntro.addEventListener('click', showIntroductionInfo);
+        introContainer = document.getElementById('explanation-container');
+        btnHide = document.getElementById('btn-hide');
+        btnHide.addEventListener('click', hideIntroductionInfo);
         btnStart = document.getElementById('btn-start');
         btnStart.addEventListener('click', onStartGame);
         gameContainer = document.getElementById('game__container');
-        questionsContainer = document.querySelector('.trivial');
+        questionsContainer = document.querySelector('.questions__container');
         msgResult = document.getElementById('msg-result');
         btnNext = document.getElementById('btn-next');
         btnNext.disabled = true;
+        btnNext.classList.add('btn--disabled');
         btnNext.addEventListener('click', goToNextQuestion);
         btnSend = document.getElementById('btn-send');
         btnSend.disabled = true;
+        btnSend.classList.add('btn--disabled');
         btnSend.addEventListener('click', recapGame);
         statisticsContainer = document.getElementById('statistics_container');
         statisticsContainer.classList.add('hide');
@@ -64,7 +74,21 @@ const app = (function (){
         startTimer();
     };
 
+    const hideIntroductionInfo = () => {
+        introContainer.classList.remove('show');
+        introContainer.classList.add('hide');
+        btnHide.classList.add('hide');
+    };
+
+    const showIntroductionInfo = () => {
+        introContainer.classList.remove('hide');
+        introContainer.classList.add('show');
+        btnHide.classList.remove('hide');
+        btnHide.classList.add('show');
+    };
+
     const showGameInterface = () => {
+        hideIntroductionInfo();
         paintQuestions(getQuestionRamdon());
     };
     
@@ -183,7 +207,7 @@ const app = (function (){
         for (var i = 0; i < answersOfQuestionObtained.length; i++) {
             var itemListDefinition = 
                 `<li>
-                    <input id="item-${i}" name="answers" type="radio" required value="${answersOfQuestionObtained[i].id}" >${answersOfQuestionObtained[i].text}
+                    <input id="item-${i}" class="answer" name="answers" type="radio" required value="${answersOfQuestionObtained[i].id}" >${answersOfQuestionObtained[i].text}
                 </li>`;
             listOfAnswersContainer += itemListDefinition;
         
@@ -198,6 +222,7 @@ const app = (function (){
         playerNameInput.classList.remove('hide');
         playerNameInput.classList.add('show');
         btnSend.disabled = false;
+        btnSend.classList.remove('btn--disabled');
     };
 
     const isAnswerCorrect = (answerCorrect, answerOfUser) => {
@@ -228,9 +253,11 @@ const app = (function (){
     const preventNextQuestion = (targetRadio) => {
         if (targetRadio.checked) {
             btnNext.disabled = false;
+            btnNext.classList.remove('btn--disabled');
         }
         else {
             btnNext.disabled = true;
+            btnNext.classList.add('btn--disabled');
         }
     };
 
@@ -321,6 +348,7 @@ const app = (function (){
             gameOver();
         }
         btnNext.disabled = true;
+        btnNext.classList.add('btn--disabled');
         console.log(`Tiempo transcurrido ${seconds} segundos`);
         playerTimeTotal = playerTimeTotal + seconds;
     };

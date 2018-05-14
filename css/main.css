@@ -1,19 +1,108 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+}
+body {
+    min-height: 100vh;
+    font-family: 'Roboto Slab', serif;
+}
+.container {
+    padding: 20px;
+}
+
 .hide {
     display: none;
 }
 .show {
     display: block;
 }
-.game__main-contain {
+.__header {
+    background: black;
+    color: white;
+}
+.header__nav{
+    align-self: center;
+}
+.link-to-explanation {
+    color: lightgrey;
+}
+@media all and (min-width: 600px) {
+    .__header{
+        display: flex;
+        justify-content: space-between;
+    }
+    .btn--intro__container{
+        display: flex;
+        justify-content: space-between;
+    }
+    .game__main-contain {
     display: flex;
     justify-content: space-between;
+    }
+    
+}
+.intro__container {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px 20px 20px;
+}
+.btn {
+    padding: 5px;
+    margin: 10px;
+    height: 40px;
+    width: 200px;
+    background: #e0e075;
+    border: 1px solid #9aa251;
+    box-shadow: 0 0 5px #9aa251;
+    border-radius: 5px;
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;    
+    font-weight: bold;  
+    cursor: pointer;  
+}
+.btn--disabled {
+    background: lightgrey;
+    color: darkgrey;
+    border: 1px solid lightgrey;
+    box-shadow: 0 0 5px lightgrey;
+}
+.game__main-contain {
     padding: 20px;
+}
+h2 {
+    margin-bottom: 10px;
+}
+.score__container {
+    padding: 15px;
+}
+.questions__container {
+    padding: 15px;
+}
+.question__answers {
+    list-style: none;
+    padding: 15px 0;
+}
+.message--result{
+    padding: 15px;
+    font-weight: bold;
 }
 .msg--correct, .correct {
     color: #21af21;
 }
 .msg--incorrect, .incorrect {
     color: red;
+}
+.bold {
+    font-weight: bold;
+}
+.player--name{
+    margin: 15px;
+    padding: 5px;
+    font-family: inherit;
+    border-radius: 5px;
+    border: 1px solid grey;
+    box-shadow: 0 0 2px grey;
 }
 .records__table {
    min-width: 30%;
