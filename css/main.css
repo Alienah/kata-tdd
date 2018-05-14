@@ -96,6 +96,9 @@ h2 {
 .bold {
     font-weight: bold;
 }
+.statistics__container {
+    padding: 15px;
+}
 .player--name{
     margin: 15px;
     padding: 5px;
