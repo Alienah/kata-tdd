@@ -39,9 +39,12 @@
         
         <div class="game__main-contain">
             <div id="game__container" class="game__container">
+               
                 <div class="questions__container">
                     <form name="form__container" class="questions__container-form" id="form_answers-container">
-                        <h2 id="question__title" class="question__title"></h2>
+                        <h2 class="question__title-container">
+                            <span id="question__title"class="title question__title"></span>
+                            <span id="timer-container" class="title timer bold"></span></h2> 
                         <ul id="answers-list" class="question__answers"></ul>
                     </form>
                 </div>
@@ -53,6 +56,8 @@
                 </form>
                 
                 <button type="button" id="btn-next" class="btn btn--next">Siguiente pregunta</button>
+                <button type="button" id="btn-stop" class="btn btn--stop">Reset</button>
+
             </div>
             <div class="score__container">
                 <table class="record__table"> <h2>Puntuaciones</h2>

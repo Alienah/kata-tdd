@@ -67,9 +67,17 @@ body {
     border: 1px solid lightgrey;
     box-shadow: 0 0 5px lightgrey;
 }
+.btn--stop {
+    width: auto;
+    background: red;
+    border: 1px solid red;
+    box-shadow: 0 0 5px red;
+    color: white;
+}
 .game__main-contain {
     padding: 20px;
 }
+
 h2 {
     margin-bottom: 10px;
 }
@@ -79,9 +87,28 @@ h2 {
 .questions__container {
     padding: 15px;
 }
+.question__title-container {
+    display: flex;
+}
+.title {
+    margin: 5px;
+}
+.question__title {
+    align-self: center;
+}
+.timer {
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    font-size: 35px;
+    color: blue;
+}
 .question__answers {
     list-style: none;
     padding: 15px 0;
+}
+.answer {
+    margin: 10px;
 }
 .message--result{
     padding: 15px;

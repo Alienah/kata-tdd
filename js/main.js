@@ -11,12 +11,14 @@ const app = (function (){
     let msgResult;
     let btnNext;
     let btnSend;
+    let btnStop;
     let statisticsContainer;
     let playerTime;
     let playerCorrectNumber;
     let playerIncorrectNumber;
     let seconds;
     let timer;
+    let timerContainer;
     let score;
     let playerNameInput;
     let recordTable;
@@ -38,6 +40,7 @@ const app = (function (){
         btnStart = document.getElementById('btn-start');
         btnStart.addEventListener('click', onStartGame);
         gameContainer = document.getElementById('game__container');
+        timerContainer = document.getElementById('timer-container');
         questionsContainer = document.querySelector('.questions__container');
         msgResult = document.getElementById('msg-result');
         btnNext = document.getElementById('btn-next');
@@ -48,6 +51,8 @@ const app = (function (){
         btnSend.disabled = true;
         btnSend.classList.add('btn--disabled');
         btnSend.addEventListener('click', recapGame);
+        btnStop = document.getElementById('btn-stop');
+        btnStop.addEventListener('click', stopGame);
         statisticsContainer = document.getElementById('statistics_container');
         statisticsContainer.classList.add('hide');
         playerNameInput = document.getElementById('player-name');
@@ -56,7 +61,7 @@ const app = (function (){
         playerCorrectNumber = document.getElementById('player-correct');
         playerIncorrectNumber = document.getElementById('player-incorrect');
         document.form__container.addEventListener('click', handleEventsOfRadios);
-        updateUIStylesAtTheEnd();
+        updateUItoInitial();
 
         getQuestions(function (data) {
             questions = data;            
@@ -68,7 +73,7 @@ const app = (function (){
     };
 
     const onStartGame = () => {
-        records = JSON.parse(localStorage.getItem('recordsData'));
+        records = localStorage.getItem('recordsData') ? JSON.parse(localStorage.getItem('recordsData')) : [];
         hideStatistics();
         showGameInterface();
         startTimer();
@@ -78,6 +83,8 @@ const app = (function (){
         introContainer.classList.remove('show');
         introContainer.classList.add('hide');
         btnHide.classList.add('hide');
+        btnStart.disabled = true;
+        btnStart.classList.add('btn--disabled');
     };
 
     const showIntroductionInfo = () => {
@@ -328,6 +335,7 @@ const app = (function (){
 
     const updateTimer = (onTimeOut) => {
         seconds++;
+        timerContainer.innerHTML = seconds;
         console.log(seconds);            
             if (seconds > 20) {
                 onTimeOut();                
@@ -388,7 +396,7 @@ const app = (function (){
                 <td class="player__name">${name}</td>
                 <td class="player__score">${score} puntos</td>
             </tr>`;
-        recordTable.innerHTML += newPlayerRecord;
+        recordTable.insertAdjacentHTML('afterbegin', newPlayerRecord);
     };
 
     const saveDataOfPlayerInStorage = () => {
@@ -436,9 +444,13 @@ const app = (function (){
         statisticsContainer.classList.add('hide');
     };
 
-    const updateUIStylesAtTheEnd = () => {
+    const updateUItoInitial = () => {
+        btnStart.disabled = false;
+        btnStart.classList.remove('btn--disabled');
         gameContainer.classList.remove('show');
         gameContainer.classList.add('hide');
+        playerNameInput.value = '';
+        playerNameInput.classList.remove('show');
         playerNameInput.classList.add('hide');
         btnSend.disabled = true;
         btnSend.classList.add('btn--disabled');
@@ -447,9 +459,15 @@ const app = (function (){
     const recapGame = () => {
         showStatistics();
         resetQuestions();
-        updateUIStylesAtTheEnd();
+        manageDataOfPlayer();     
+        updateUItoInitial();
         resetStatistics();
-        manageDataOfPlayer();
+    };
+
+    const stopGame = () => {
+        updateUItoInitial();
+        stopTimer();
+        resetQuestions();
     };
 
     return {
