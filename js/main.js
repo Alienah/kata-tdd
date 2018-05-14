@@ -16,6 +16,7 @@ const app = (function (){
     let timer;
     let score;
     let playerNameInput;
+    let recordTable;
     let playerTimeTotal= 0;
     let numberOfCorrects = 0;
     let numberOfIncorrects = 0;
@@ -40,6 +41,7 @@ const app = (function (){
         statisticsContainer = document.getElementById('statistics_container');
         statisticsContainer.classList.add('hide');
         playerNameInput = document.getElementById('player-name');
+        recordTable = document.querySelector('.record__table');
         playerTime = document.getElementById('player-time');
         playerCorrectNumber = document.getElementById('player-correct');
         playerIncorrectNumber = document.getElementById('player-incorrect');
@@ -49,15 +51,19 @@ const app = (function (){
             questions = data;            
         });
         gameUInotShowed(); 
-        
+         
         records = localStorage.getItem('recordsData') ? JSON.parse(localStorage.getItem('recordsData')) : [];
 
         //Set and Get data from localStorage
         localStorage.setItem('recordsData', JSON.stringify(records));
-        const dataFromStorage = JSON.parse(localStorage.getItem('recordsData'));
+        records = JSON.parse(localStorage.getItem('recordsData'));
+        console.log(records);
+        showScoreRecords();
+        
     };
 
     const onStartGame = () => {
+        records = JSON.parse(localStorage.getItem('recordsData'));
         hideStatistics();
         showGameInterface();
         startTimer();
@@ -65,8 +71,20 @@ const app = (function (){
 
     const showGameInterface = () => {
         paintQuestions(giveQuestionObtained());
-    }; 
-
+    };
+    
+    const showScoreRecords = () => {
+        let recordsPanel = records.map(player =>{
+            return(
+            `<tr class="records__table--player">
+                <td class="player__name">${player.name}</td>
+                <td class="player__score">${player.score}</td>
+            </tr>`);
+          
+        });
+        recordTable.innerHTML += recordsPanel;
+    };
+ 
     const getQuestions = callback => {
         const serverData = [
             {
@@ -346,19 +364,30 @@ const app = (function (){
         seconds = 0;
     };
 
-    const saveDataOfPlayer = () => {
+    const paintDataOfPlayer = (name, score) => {
+        let newPlayerRecord = `<tr class="records__table--player">
+                <td class="player__name">${name}</td>
+                <td class="player__score">${score} puntos</td>
+            </tr>`;
+        recordTable.innerHTML += newPlayerRecord;
+    };
+
+    const saveDataOfPlayerInStorage = () => {
+        localStorage.setItem('recordsData', JSON.stringify(records));
+    };
+
+    const manageDataOfPlayer = () => {
         let playerName = playerNameInput.value;
-        console.log(playerName);
         let playerData = {
             name: playerName,
             score: `${score} puntos`
         };
         records.push(playerData);
-        console.log(records);
-        
-        localStorage.setItem('recordsData', JSON.stringify(records));
-    }; 
-   
+
+        saveDataOfPlayerInStorage();
+        paintDataOfPlayer(playerName, score);
+    };
+ 
     const resetQuestions = () => {
         getQuestions(function (data) {
             questions = data;
@@ -398,7 +427,7 @@ const app = (function (){
         resetQuestions();
         gameUInotShowed();
         resetStatistics();
-        saveDataOfPlayer();
+        manageDataOfPlayer();
     };
 
     return {
