@@ -4,3 +4,9 @@
 .show {
     display: block;
 }
+.msg--correct {
+    color: #21af21;
+}
+.msg--incorrect {
+    color: red;
+}

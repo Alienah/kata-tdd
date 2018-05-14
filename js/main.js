@@ -4,6 +4,7 @@ const app = (function (){
     let btnStart;
     let gameContainer;
     let questionsContainer;
+    let msgResult;
     let btnNext;
     let btnSend;
     let seconds;
@@ -21,6 +22,7 @@ const app = (function (){
         gameContainer = document.getElementById('game__container');
         gameContainer.classList.add('hide');
         questionsContainer = document.querySelector('.trivial');
+        msgResult = document.getElementById('msg-result');
         btnNext = document.getElementById('btn-next');
         btnNext.disabled = true;
         btnNext.addEventListener('click', goToNextQuestion);
@@ -206,9 +208,17 @@ const app = (function (){
     };
 
     //Mensajes que se mostrarán en la interfaz
-    const showMsgWhenIsCorrect = () => console.log('Correcto!');     
+    const showMsgWhenIsCorrect = () => {
+        msgResult.classList.remove('msg--incorrect');
+        msgResult.classList.add('msg--correct');
+        msgResult.innerHTML = 'Correcto!';
+    };     
 
-    const showMsgWhenIsIncorrect = () => console.log('Incorrecto!'); 
+    const showMsgWhenIsIncorrect = () => {
+        msgResult.classList.remove('msg--correct');
+        msgResult.classList.add('msg--incorrect');
+        msgResult.innerHTML = 'Incorrecto :(';
+    }; 
 
     //Recalcular marcador
     const recalculateScoreWhenIsCorrect = (score, seconds) => {
@@ -251,7 +261,7 @@ const app = (function (){
     const updateTimer = (onTimeOut) => {
         seconds++;
         console.log(seconds);            
-            if (seconds > 5) {
+            if (seconds > 20) {
                 onTimeOut();                
                 resetAnswerTimer();
             }       
