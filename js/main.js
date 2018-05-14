@@ -65,7 +65,7 @@ const app = (function (){
     };
 
     const showGameInterface = () => {
-        paintQuestions(giveQuestionObtained());
+        paintQuestions(getQuestionRamdon());
     };
     
     const showScoreRecords = () => {
@@ -158,17 +158,11 @@ const app = (function (){
         callback(serverData);
     };
 
-    //Darle Vuelta
     const getQuestionRamdon = () => {
-        const randomPosition = Math.floor(Math.random()* questions.length);
-        let questionToGet = questions[randomPosition];
+        const randomPosition = Math.floor(Math.random() * questions.length);
+        questionObtained = questions[randomPosition];
         removeVisitedQuestion(randomPosition);
-        return questionToGet;
-    };
 
-    //Darle vuelta
-    const giveQuestionObtained = () => {
-        questionObtained = getQuestionRamdon();
         return questionObtained;
     };
 
