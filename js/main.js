@@ -206,6 +206,8 @@ const app = (function (){
     const changeUIWhenNoMoreQuestions = () => {
         questionsContainer.classList.add('hide');
         btnNext.classList.add('hide');
+        playerNameInput.classList.remove('hide');
+        playerNameInput.classList.add('show');
         btnSend.disabled = false;
     };
 
@@ -420,6 +422,7 @@ const app = (function (){
     const gameUInotShowed = () => {
         gameContainer.classList.remove('show');
         gameContainer.classList.add('hide');
+        playerNameInput.classList.add('hide');
     };
 
     const recapGame = () => {
