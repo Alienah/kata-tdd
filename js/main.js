@@ -56,7 +56,7 @@ const app = (function (){
         playerCorrectNumber = document.getElementById('player-correct');
         playerIncorrectNumber = document.getElementById('player-incorrect');
         document.form__container.addEventListener('click', handleEventsOfRadios);
-        managePartsOfUInotShowed();
+        updateUIStylesAtTheEnd();
 
         getQuestions(function (data) {
             questions = data;            
@@ -436,16 +436,18 @@ const app = (function (){
         statisticsContainer.classList.add('hide');
     };
 
-    const managePartsOfUInotShowed = () => {
+    const updateUIStylesAtTheEnd = () => {
         gameContainer.classList.remove('show');
         gameContainer.classList.add('hide');
         playerNameInput.classList.add('hide');
+        btnSend.disabled = true;
+        btnSend.classList.add('btn--disabled');
     };
 
     const recapGame = () => {
         showStatistics();
         resetQuestions();
-        managePartsOfUInotShowed();
+        updateUIStylesAtTheEnd();
         resetStatistics();
         manageDataOfPlayer();
     };

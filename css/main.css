@@ -33,7 +33,7 @@ body {
     }
     .btn--intro__container{
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
     }
     .game__main-contain {
     display: flex;
