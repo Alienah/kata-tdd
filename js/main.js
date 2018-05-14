@@ -46,20 +46,15 @@ const app = (function (){
         playerCorrectNumber = document.getElementById('player-correct');
         playerIncorrectNumber = document.getElementById('player-incorrect');
         document.form__container.addEventListener('click', handleEventsOfRadios);
+        managePartsOfUInotShowed();
 
         getQuestions(function (data) {
             questions = data;            
         });
-        gameUInotShowed(); 
-         
+                 
         records = localStorage.getItem('recordsData') ? JSON.parse(localStorage.getItem('recordsData')) : [];
 
-        //Set and Get data from localStorage
-        localStorage.setItem('recordsData', JSON.stringify(records));
-        records = JSON.parse(localStorage.getItem('recordsData'));
-        console.log(records);
-        showScoreRecords();
-        
+        showScoreRecords();        
     };
 
     const onStartGame = () => {
@@ -419,7 +414,7 @@ const app = (function (){
         statisticsContainer.classList.add('hide');
     };
 
-    const gameUInotShowed = () => {
+    const managePartsOfUInotShowed = () => {
         gameContainer.classList.remove('show');
         gameContainer.classList.add('hide');
         playerNameInput.classList.add('hide');
@@ -428,7 +423,7 @@ const app = (function (){
     const recapGame = () => {
         showStatistics();
         resetQuestions();
-        gameUInotShowed();
+        managePartsOfUInotShowed();
         resetStatistics();
         manageDataOfPlayer();
     };
