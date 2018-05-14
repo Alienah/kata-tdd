@@ -7,9 +7,16 @@ const app = (function (){
     let msgResult;
     let btnNext;
     let btnSend;
+    let statisticsContainer;
+    let playerTime;
+    let playerCorrectNumber;
+    let playerIncorrectNumber;
     let seconds;
     let timer;
     let score;
+    let playerTimeTotal= 0;
+    let numberOfCorrects = 0;
+    let numberOfIncorrects = 0;
     let inputValueOfAnswer;
     let correctAnswerId;
 
@@ -29,6 +36,11 @@ const app = (function (){
         btnSend = document.getElementById('btn-send');
         btnSend.disabled = true;
         btnSend.addEventListener('click', recapGame);
+        statisticsContainer = document.getElementById('statistics_container');
+        statisticsContainer.classList.add('hide');
+        playerTime = document.getElementById('player-time');
+        playerCorrectNumber = document.getElementById('player-correct');
+        playerIncorrectNumber = document.getElementById('player-incorrect');
         document.form__container.addEventListener('click', handleEventsOfRadios);
 
         getQuestions(function (data) {
@@ -182,9 +194,11 @@ const app = (function (){
     const getResultOfComparation = () => {
         if(isAnswerCorrect(inputValueOfAnswer, correctAnswerId)) {
             showMsgWhenIsCorrect();
+            sumToTotalCorrectAnswersOfPlayer();
             showScore(recalculateScoreWhenIsCorrect);
         } else {
             showMsgWhenIsIncorrect();
+            sumToTotalIncorrectAnswersOfPlayer();
             showScore(recalculateScoreWhenIsIncorrect);            
         }      
     };
@@ -220,6 +234,14 @@ const app = (function (){
         msgResult.classList.add('msg--incorrect');
         msgResult.innerHTML = 'Incorrecto :(';
     }; 
+
+    const sumToTotalCorrectAnswersOfPlayer = () => {
+        numberOfCorrects = numberOfCorrects + 1;
+    };
+
+    const sumToTotalIncorrectAnswersOfPlayer = () => {
+        numberOfIncorrects = numberOfIncorrects + 1;
+    };
 
     //Recalcular marcador
     const recalculateScoreWhenIsCorrect = (score, seconds) => {
@@ -282,6 +304,7 @@ const app = (function (){
         }
         btnNext.disabled = true;
         console.log(`Tiempo transcurrido ${seconds} segundos`);
+        playerTimeTotal = playerTimeTotal + seconds;
     };
 
     const updateScore = () => {
@@ -320,11 +343,25 @@ const app = (function (){
         });
     };
 
+    const getTimeAverage = () => {
+        return playerTimeTotal / 4 ;
+    };
+
+    const showStatistics = () => {
+        statisticsContainer.classList.remove('hide');
+        statisticsContainer.classList.add('show');
+        playerTime.innerHTML = getTimeAverage();
+        playerCorrectNumber.innerHTML = numberOfCorrects;
+        playerIncorrectNumber.innerHTML = numberOfIncorrects;
+    };
+
     const gameUInotShowed = () => {
+        gameContainer.classList.remove('show');
         gameContainer.classList.add('hide');
     };
 
     const recapGame = () => {
+        showStatistics();
         resetQuestions();
         gameUInotShowed();
     };

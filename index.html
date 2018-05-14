@@ -28,7 +28,7 @@
             </ul>
         </div>
         <button type="button" id="btn-start">Empezar</button>
-        <div>
+        <div class="game__main-contain">
             <div id="game__container" style="border:1px solid red">
                 <div class="trivial">
                     <form name="form__container" id="form_answers-container">
@@ -52,12 +52,18 @@
                     </tr>
                 </table>
             </div>
-            <div class="stadistics__container">
-                <h2>Estadísticas</h2>
-                <p class="stadistics__item">Velocidad de promedio respondiendo: <span class="player--time">7 segundos</span></p>
-                <p class="stadistics__item">Preguntas acertadas: <span class="player--number-correct">3</span></p>
-                <p class="stadistics__item">Preguntas fallidas: <span class="player--number-incorrect">1</span></p>
-            </div>
+        </div>
+        <div id="statistics_container" class="statistics__container">
+            <h2>Estadísticas</h2>
+            <p class="statistics__item">Velocidad de promedio respondiendo:
+                <span id="player-time" class="player--time">7 segundos</span>
+            </p>
+            <p class="statistics__item">Preguntas acertadas:
+                <span id="player-correct" class="correct player--number-correct">3</span>
+            </p>
+            <p class="statistics__item">Preguntas fallidas:
+                <span id="player-incorrect" class="incorrect player--number-incorrect">1</span>
+            </p>
         </div>
         
 

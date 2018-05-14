@@ -4,10 +4,15 @@
 .show {
     display: block;
 }
-.msg--correct {
+.game__main-contain {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+.msg--correct, .correct {
     color: #21af21;
 }
-.msg--incorrect {
+.msg--incorrect, .incorrect {
     color: red;
 }
 .score__table {
