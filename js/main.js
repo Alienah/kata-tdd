@@ -1,4 +1,5 @@
 const app = (function (){
+    let records;
     let questions = [];
     let questionObtained;
     let btnStart;
@@ -14,6 +15,7 @@ const app = (function (){
     let seconds;
     let timer;
     let score;
+    let playerNameInput;
     let playerTimeTotal= 0;
     let numberOfCorrects = 0;
     let numberOfIncorrects = 0;
@@ -37,6 +39,7 @@ const app = (function (){
         btnSend.addEventListener('click', recapGame);
         statisticsContainer = document.getElementById('statistics_container');
         statisticsContainer.classList.add('hide');
+        playerNameInput = document.getElementById('player-name');
         playerTime = document.getElementById('player-time');
         playerCorrectNumber = document.getElementById('player-correct');
         playerIncorrectNumber = document.getElementById('player-incorrect');
@@ -45,7 +48,13 @@ const app = (function (){
         getQuestions(function (data) {
             questions = data;            
         });
-        gameUInotShowed();        
+        gameUInotShowed(); 
+        
+        records = localStorage.getItem('recordsData') ? JSON.parse(localStorage.getItem('recordsData')) : [];
+
+        //Set and Get data from localStorage
+        localStorage.setItem('recordsData', JSON.stringify(records));
+        const dataFromStorage = JSON.parse(localStorage.getItem('recordsData'));
     };
 
     const onStartGame = () => {
@@ -337,6 +346,19 @@ const app = (function (){
         seconds = 0;
     };
 
+    const saveDataOfPlayer = () => {
+        let playerName = playerNameInput.value;
+        console.log(playerName);
+        let playerData = {
+            name: playerName,
+            score: `${score} puntos`
+        };
+        records.push(playerData);
+        console.log(records);
+        
+        localStorage.setItem('recordsData', JSON.stringify(records));
+    }; 
+   
     const resetQuestions = () => {
         getQuestions(function (data) {
             questions = data;
@@ -376,6 +398,7 @@ const app = (function (){
         resetQuestions();
         gameUInotShowed();
         resetStatistics();
+        saveDataOfPlayer();
     };
 
     return {
