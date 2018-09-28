@@ -7,7 +7,6 @@ export default function createController() {
     let questionObtained;
     let linkToIntro;
     let btnStart;
-    let msgResult;
     let btnNext;
     let btnSend;
     let btnStop;
@@ -38,7 +37,6 @@ function startApp() {
     btnStart = document.getElementById('btn-start');
     btnStart.addEventListener('click', onStartGame);
     timerContainer = document.getElementById('timer-container');
-    msgResult = document.getElementById('msg-result');
     btnNext = document.getElementById('btn-next');
     btnNext.disabled = true;
     btnNext.classList.add('btn--disabled');
@@ -100,17 +98,17 @@ function isAnswerCorrect(answerCorrect, answerOfUser) {
 };
 
 function getValuesToCompare(target) {
-    inputValueOfAnswer = target.value;
+    inputValueOfAnswer = createView().getAnswerOfPlayer(target);
     correctAnswerId = questionObtained.correctAnswerId;
 };
 
 function getResultOfComparation() {
     if (isAnswerCorrect(inputValueOfAnswer, correctAnswerId)) {
-        showMsgWhenIsCorrect();
+        createView().showMsgWhenIsCorrect();
         sumToTotalCorrectAnswersOfPlayer();
         showScore(recalculateScoreWhenIsCorrect);
     } else {
-        showMsgWhenIsIncorrect();
+        createView().showMsgWhenIsIncorrect();
         sumToTotalIncorrectAnswersOfPlayer();
         showScore(recalculateScoreWhenIsIncorrect);
     }
@@ -135,19 +133,6 @@ function handleEventsOfRadios(event) {
     const target = event.target;
     getValuesToCompare(target);
     preventNextQuestion(target);
-};
-
-//Mensajes que se mostrarán en la interfaz
-function showMsgWhenIsCorrect() {
-    msgResult.classList.remove('msg--incorrect');
-    msgResult.classList.add('msg--correct');
-    msgResult.innerHTML = 'Correcto!';
-};
-
-function showMsgWhenIsIncorrect() {
-    msgResult.classList.remove('msg--correct');
-    msgResult.classList.add('msg--incorrect');
-    msgResult.innerHTML = 'Incorrecto :(';
 };
 
 function sumToTotalCorrectAnswersOfPlayer() {
@@ -254,9 +239,9 @@ function resetAnswerTimer() {
     seconds = 0;
 };
 
-function saveDataOfPlayerInStorage() {
-    localStorage.setItem('recordsData', JSON.stringify(store.records));
-};
+// function saveDataOfPlayerInStorage() {
+//     localStorage.setItem('recordsData', JSON.stringify(store.records));
+// };
 
 function manageDataOfPlayer() {
     let playerName = createView().getNameOfPlayer();
@@ -266,7 +251,7 @@ function manageDataOfPlayer() {
     };
     store.records.push(playerData);
 
-    saveDataOfPlayerInStorage();
+    createClient().saveDataOfPlayerInStorage();
     createView().paintDataOfPlayer(playerName, score);
 };
 

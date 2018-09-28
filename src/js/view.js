@@ -7,6 +7,7 @@ export default function createGameView () {
     gameContainer = document.getElementById('game__container');
     const questionsContainer = document.querySelector('.questions__container');
     const btnNext = document.getElementById('btn-next');
+    const msgResult = document.getElementById('msg-result');
     let playerNameInput;
     playerNameInput = document.getElementById('player-name');
     const btnSend = document.getElementById('btn-send');
@@ -58,6 +59,19 @@ export default function createGameView () {
 
     };
 
+    //Mensajes que se mostrarán en la interfaz
+    function showMsgWhenIsCorrect() {
+        msgResult.classList.remove('msg--incorrect');
+        msgResult.classList.add('msg--correct');
+        msgResult.innerHTML = 'Correcto!';
+    };
+
+    function showMsgWhenIsIncorrect() {
+        msgResult.classList.remove('msg--correct');
+        msgResult.classList.add('msg--incorrect');
+        msgResult.innerHTML = 'Incorrecto :(';
+    };
+
     function updateUItoInitial() {
         btnStart.disabled = false;
         btnStart.classList.remove('btn--disabled');
@@ -81,6 +95,10 @@ export default function createGameView () {
 
     function getNameOfPlayer() {
         return playerNameInput.value;
+    }
+
+    function getAnswerOfPlayer(target) {
+        return target.value
     }
 
     function renderRecords(records) {
@@ -108,9 +126,12 @@ export default function createGameView () {
         showIntroductionInfo,
         hideIntroductionInfo,
         paintQuestions,
+        showMsgWhenIsCorrect,
         updateUItoInitial,
+        showMsgWhenIsIncorrect,
         changeUIWhenNoMoreQuestions,
         getNameOfPlayer,
+        getAnswerOfPlayer,
         renderRecords,
         paintDataOfPlayer
     })
