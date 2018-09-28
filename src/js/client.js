@@ -1,3 +1,5 @@
+import store from "./store.js";
+
 export default function createClient() {
 
     function getQuestions() {
@@ -11,8 +13,14 @@ export default function createClient() {
     function getRecords() {
         return localStorage.getItem('recordsData') ? JSON.parse(localStorage.getItem('recordsData')) : [];
     }
+
+    function saveDataOfPlayerInStorage() {
+        localStorage.setItem('recordsData', JSON.stringify(store.records));
+    };
+
     return {
         getQuestions,
-        getRecords
+        getRecords,
+        saveDataOfPlayerInStorage
     }
 }

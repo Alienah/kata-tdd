@@ -239,10 +239,6 @@ function resetAnswerTimer() {
     seconds = 0;
 };
 
-// function saveDataOfPlayerInStorage() {
-//     localStorage.setItem('recordsData', JSON.stringify(store.records));
-// };
-
 function manageDataOfPlayer() {
     let playerName = createView().getNameOfPlayer();
     let playerData = {
