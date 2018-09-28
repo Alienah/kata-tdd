@@ -1,3 +1,5 @@
+import createClient from "./client.js";
+
 const app = (function (){
     let records;
     let questions = [];
@@ -63,14 +65,16 @@ const app = (function (){
         document.form__container.addEventListener('click', handleEventsOfRadios);
         updateUItoInitial();
 
-        getQuestions(function (data) {
-            questions = data;            
-        });
+        saveQuestions();
                  
         records = localStorage.getItem('recordsData') ? JSON.parse(localStorage.getItem('recordsData')) : [];
 
         showScoreRecords();        
     };
+
+    function saveQuestions () {
+        createClient().getQuestions().then((data) => { questions = data })
+    }
 
     const onStartGame = () => {
         records = localStorage.getItem('recordsData') ? JSON.parse(localStorage.getItem('recordsData')) : [];
@@ -111,84 +115,6 @@ const app = (function (){
         recordTable.innerHTML += recordsPanel;
     };
  
-    const getQuestions = callback => {
-        const serverData = [
-            {
-                question: 
-                    { 
-                        id: 1, text: '¿Capital de Honduras?' 
-                    },
-                answers: [
-                            { 
-                                id: 1, text: 'Tegucigalpa' 
-                            }, 
-                            { 
-                                id: 2, text: 'Lima' 
-                            }, 
-                            { 
-                                id: 3, text: 'Buenos Aires' 
-                            }
-                        ],
-                correctAnswerId: 1
-            },
-            {
-                question: 
-                    {
-                    id: 2, text: 'Rio que pasa por Toledo' 
-                    },
-                answers: [
-                            { 
-                                id: 4, text: 'Miño' 
-                            }, 
-                            { 
-                                id: 5, text: 'Tajo' 
-                            }, 
-                            { 
-                                id: 6, text: 'Duero' 
-                            }
-                        ],
-                correctAnswerId: 5
-            },
-            {
-                question: 
-                    { 
-                        id: 3, text: 'Color Bandera de Argentina' 
-                    },
-                answers: [
-                            { 
-                                id: 7, text: 'Rojo Blanco' 
-                            }, 
-                            { 
-                                id: 8, text: 'Blanco y Verde' 
-                            }, 
-                            {
-                                id: 9, text: 'Azul Blanco Azul' 
-                                }
-                        ],
-                correctAnswerId: 9
-            },
-            {
-                question: 
-                    { 
-                        id: 3, text: '¿Quién pintó la capilla sixtina?' 
-                    },
-                answers: [
-                            { 
-                                id: 7, text: 'Picasso' 
-                            }, 
-                            { 
-                                id: 8, text: 'Velazquez' 
-                            }, 
-                            {
-                                id: 9, text: 'Miguel Angel' 
-                                }
-                        ],
-                correctAnswerId: 9
-            },
-        ];
-        callback(serverData);
-    };
-
     const getQuestionRamdon = () => {
         const randomPosition = Math.floor(Math.random() * questions.length);
         questionObtained = questions[randomPosition];
@@ -416,9 +342,7 @@ const app = (function (){
     };
  
     const resetQuestions = () => {
-        getQuestions(function (data) {
-            questions = data;
-        });
+        saveQuestions();
     };
 
     const getTimeAverage = () => {
@@ -470,6 +394,8 @@ const app = (function (){
         resetQuestions();
     };
 
+    
+
     return {
         getQuestionRamdon: getQuestionRamdon,
         paintQuestions: paintQuestions,
@@ -477,5 +403,6 @@ const app = (function (){
         startApp       
     };
 });
+Window.onload = app().startApp();
 
 

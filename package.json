@@ -1,0 +1,29 @@
+{
+  "name": "saberyganar",
+  "version": "1.0.0",
+  "description": "Game of questions and answers.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alienah/saberYganar.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alienah/saberYganar/issues"
+  },
+  "homepage": "https://github.com/Alienah/saberYganar#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "jest": "^23.6.0"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2"
+  }
+}
