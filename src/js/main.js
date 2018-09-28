@@ -1,12 +1,11 @@
 import createClient from "./client.js";
+import createView from "./view.js";
 
 const app = (function (){
     let records;
     let questions = [];
     let questionObtained;
     let linkToIntro;
-    let introContainer;
-    let btnHide;
     let btnStart;
     let gameContainer;
     let questionsContainer;
@@ -31,14 +30,15 @@ const app = (function (){
     let correctAnswerId;
 
     function startApp () {
+        // createView().prepareDOM()
+
         seconds = 0;
         timer = null;
         score = 0;
         linkToIntro = document.querySelector('.link-to-explanation');
-        linkToIntro.addEventListener('click', showIntroductionInfo);
-        introContainer = document.getElementById('explanation-container');
-        btnHide = document.getElementById('btn-hide');
-        btnHide.addEventListener('click', hideIntroductionInfo);
+        linkToIntro.addEventListener('click', createView().showIntroductionInfo);
+        const btnHide = document.getElementById('btn-hide');
+        btnHide.addEventListener('click', createView().hideIntroductionInfo);
         btnStart = document.getElementById('btn-start');
         btnStart.addEventListener('click', onStartGame);
         gameContainer = document.getElementById('game__container');
@@ -63,7 +63,7 @@ const app = (function (){
         playerCorrectNumber = document.getElementById('player-correct');
         playerIncorrectNumber = document.getElementById('player-incorrect');
         document.form__container.addEventListener('click', handleEventsOfRadios);
-        updateUItoInitial();
+        //updateUItoInitial();
 
         saveQuestions();
                  
@@ -83,23 +83,8 @@ const app = (function (){
         startTimer();
     };
 
-    function hideIntroductionInfo () {
-        introContainer.classList.remove('show');
-        introContainer.classList.add('hide');
-        btnHide.classList.add('hide');
-        btnStart.disabled = true;
-        btnStart.classList.add('btn--disabled');
-    };
-
-    function showIntroductionInfo () {
-        introContainer.classList.remove('hide');
-        introContainer.classList.add('show');
-        btnHide.classList.remove('hide');
-        btnHide.classList.add('show');
-    };
-
     function showGameInterface () {
-        hideIntroductionInfo();
+        createView().hideIntroductionInfo();
         paintQuestions(getQuestionRamdon());
     };
     
