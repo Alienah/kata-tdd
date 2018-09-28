@@ -7,7 +7,12 @@ export default function createClient() {
                 .then((data) => { return data })
                 )
     }
+
+    function getRecords() {
+        return localStorage.getItem('recordsData') ? JSON.parse(localStorage.getItem('recordsData')) : [];
+    }
     return {
-        getQuestions
+        getQuestions,
+        getRecords
     }
 }

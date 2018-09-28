@@ -1,8 +1,8 @@
 import createClient from "./client.js";
 import createView from "./view.js";
+import store from "./store.js"
 
 const app = (function (){
-    let records;
     let questions = [];
     let questionObtained;
     let linkToIntro;
@@ -22,7 +22,6 @@ const app = (function (){
     let timerContainer;
     let score;
     let playerNameInput;
-    let recordTable;
     let playerTimeTotal= 0;
     let numberOfCorrects = 0;
     let numberOfIncorrects = 0;
@@ -58,26 +57,28 @@ const app = (function (){
         statisticsContainer = document.getElementById('statistics_container');
         statisticsContainer.classList.add('hide');
         playerNameInput = document.getElementById('player-name');
-        recordTable = document.querySelector('.record__table');
         playerTime = document.getElementById('player-time');
         playerCorrectNumber = document.getElementById('player-correct');
         playerIncorrectNumber = document.getElementById('player-incorrect');
         document.form__container.addEventListener('click', handleEventsOfRadios);
         //updateUItoInitial();
 
-        saveQuestions();
-                 
-        records = localStorage.getItem('recordsData') ? JSON.parse(localStorage.getItem('recordsData')) : [];
-
-        showScoreRecords();        
+        saveQuestions();        
+        updateStore()
+        createView().renderRecords(store.records);        
     };
 
     function saveQuestions () {
         createClient().getQuestions().then((data) => { questions = data })
     }
 
+    function updateStore () {
+        store.records = createClient().getRecords();
+        console.log(store);
+    }
+
     function onStartGame () {
-        records = localStorage.getItem('recordsData') ? JSON.parse(localStorage.getItem('recordsData')) : [];
+        updateStore();
         hideStatistics();
         showGameInterface();
         startTimer();
@@ -86,18 +87,6 @@ const app = (function (){
     function showGameInterface () {
         createView().hideIntroductionInfo();
         paintQuestions(getQuestionRamdon());
-    };
-    
-    function showScoreRecords () {
-        let recordsPanel = records.map(player =>{
-            return(
-            `<tr class="records__table--player">
-                <td class="player__name">${player.name}</td>
-                <td class="player__score">${player.score}</td>
-            </tr>`);
-          
-        });
-        recordTable.innerHTML += recordsPanel;
     };
  
     function getQuestionRamdon () {
@@ -302,16 +291,8 @@ const app = (function (){
         seconds = 0;
     };
 
-    function paintDataOfPlayer (name, score) {
-        let newPlayerRecord = `<tr class="records__table--player">
-                <td class="player__name">${name}</td>
-                <td class="player__score">${score} puntos</td>
-            </tr>`;
-        recordTable.insertAdjacentHTML('afterbegin', newPlayerRecord);
-    };
-
     function saveDataOfPlayerInStorage () {
-        localStorage.setItem('recordsData', JSON.stringify(records));
+        localStorage.setItem('recordsData', JSON.stringify(store.records));
     };
 
     function manageDataOfPlayer () {
@@ -320,10 +301,10 @@ const app = (function (){
             name: playerName,
             score: `${score} puntos`
         };
-        records.push(playerData);
+        store.records.push(playerData);
 
         saveDataOfPlayerInStorage();
-        paintDataOfPlayer(playerName, score);
+        createView().paintDataOfPlayer(playerName, score);
     };
  
     function resetQuestions () {
@@ -377,9 +358,7 @@ const app = (function (){
         updateUItoInitial();
         stopTimer();
         resetQuestions();
-    };
-
-    
+    };    
 
     return {
         getQuestionRamdon: getQuestionRamdon,
