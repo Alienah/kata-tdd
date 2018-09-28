@@ -3,6 +3,13 @@ export default function createGameView () {
     const introContainer = document.getElementById('explanation-container');
     const btnStart = document.getElementById('btn-start');
     const btnHide = document.getElementById('btn-hide');
+    let gameContainer;
+    gameContainer = document.getElementById('game__container');
+    const questionsContainer = document.querySelector('.questions__container');
+    const btnNext = document.getElementById('btn-next');
+    let playerNameInput;
+    playerNameInput = document.getElementById('player-name');
+    const btnSend = document.getElementById('btn-send');
     let recordTable;
     recordTable = document.querySelector('.record__table');
     // let btnHide;
@@ -29,6 +36,53 @@ export default function createGameView () {
         btnStart.classList.add('btn--disabled');
     };
 
+    function paintQuestions(questionObtained) {
+        gameContainer.classList.add('show');
+        questionsContainer.classList.remove('hide');
+        btnNext.classList.remove('hide');
+        const titleOfQuestionObtained = questionObtained.question.text;
+        const answersOfQuestionObtained = questionObtained.answers;
+        const idOfQuestionObtained = questionObtained.question.id;
+        let listOfAnswersContainer = '';
+
+        document.getElementById('question__title').innerHTML = titleOfQuestionObtained;
+        for (var i = 0; i < answersOfQuestionObtained.length; i++) {
+            var itemListDefinition =
+                `<li>
+                    <input id="item-${i}" class="answer" name="answers" type="radio" required value="${answersOfQuestionObtained[i].id}" >${answersOfQuestionObtained[i].text}
+                </li>`;
+            listOfAnswersContainer += itemListDefinition;
+
+        }
+        document.getElementById('answers-list').innerHTML = listOfAnswersContainer;
+
+    };
+
+    function updateUItoInitial() {
+        btnStart.disabled = false;
+        btnStart.classList.remove('btn--disabled');
+        gameContainer.classList.remove('show');
+        gameContainer.classList.add('hide');
+        playerNameInput.value = '';
+        playerNameInput.classList.remove('show');
+        playerNameInput.classList.add('hide');
+        btnSend.disabled = true;
+        btnSend.classList.add('btn--disabled');
+    };
+
+    function changeUIWhenNoMoreQuestions() {
+        questionsContainer.classList.add('hide');
+        btnNext.classList.add('hide');
+        playerNameInput.classList.remove('hide');
+        playerNameInput.classList.add('show');
+        btnSend.disabled = false;
+        btnSend.classList.remove('btn--disabled');
+    };
+
+    function getNameOfPlayer() {
+        return playerNameInput.value;
+    }
+
     function renderRecords(records) {
         let recordsPanel = records.map(player => {
             return (
@@ -53,6 +107,10 @@ export default function createGameView () {
         prepareDOM,
         showIntroductionInfo,
         hideIntroductionInfo,
+        paintQuestions,
+        updateUItoInitial,
+        changeUIWhenNoMoreQuestions,
+        getNameOfPlayer,
         renderRecords,
         paintDataOfPlayer
     })

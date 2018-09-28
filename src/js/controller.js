@@ -7,8 +7,6 @@ export default function createController() {
     let questionObtained;
     let linkToIntro;
     let btnStart;
-    let gameContainer;
-    let questionsContainer;
     let msgResult;
     let btnNext;
     let btnSend;
@@ -21,7 +19,6 @@ export default function createController() {
     let timer;
     let timerContainer;
     let score;
-    let playerNameInput;
     let playerTimeTotal = 0;
     let numberOfCorrects = 0;
     let numberOfIncorrects = 0;
@@ -40,9 +37,7 @@ function startApp() {
     btnHide.addEventListener('click', createView().hideIntroductionInfo);
     btnStart = document.getElementById('btn-start');
     btnStart.addEventListener('click', onStartGame);
-    gameContainer = document.getElementById('game__container');
     timerContainer = document.getElementById('timer-container');
-    questionsContainer = document.querySelector('.questions__container');
     msgResult = document.getElementById('msg-result');
     btnNext = document.getElementById('btn-next');
     btnNext.disabled = true;
@@ -56,12 +51,11 @@ function startApp() {
     btnStop.addEventListener('click', stopGame);
     statisticsContainer = document.getElementById('statistics_container');
     statisticsContainer.classList.add('hide');
-    playerNameInput = document.getElementById('player-name');
     playerTime = document.getElementById('player-time');
     playerCorrectNumber = document.getElementById('player-correct');
     playerIncorrectNumber = document.getElementById('player-incorrect');
     document.form__container.addEventListener('click', handleEventsOfRadios);
-    //updateUItoInitial();
+    createView().updateUItoInitial();
 
     saveQuestions();
     updateStore()
@@ -86,7 +80,7 @@ function onStartGame() {
 
 function showGameInterface() {
     createView().hideIntroductionInfo();
-    paintQuestions(getQuestionRamdon());
+    createView().paintQuestions(getQuestionRamdon());
 };
 
 function getQuestionRamdon() {
@@ -99,37 +93,6 @@ function getQuestionRamdon() {
 
 function removeVisitedQuestion(randomPosition) {
     questions.splice(randomPosition, 1);
-};
-
-function paintQuestions(questionObtained) {
-    gameContainer.classList.add('show');
-    questionsContainer.classList.remove('hide');
-    btnNext.classList.remove('hide');
-    const titleOfQuestionObtained = questionObtained.question.text;
-    const answersOfQuestionObtained = questionObtained.answers;
-    const idOfQuestionObtained = questionObtained.question.id;
-    let listOfAnswersContainer = '';
-
-    document.getElementById('question__title').innerHTML = titleOfQuestionObtained;
-    for (var i = 0; i < answersOfQuestionObtained.length; i++) {
-        var itemListDefinition =
-            `<li>
-                    <input id="item-${i}" class="answer" name="answers" type="radio" required value="${answersOfQuestionObtained[i].id}" >${answersOfQuestionObtained[i].text}
-                </li>`;
-        listOfAnswersContainer += itemListDefinition;
-
-    }
-    document.getElementById('answers-list').innerHTML = listOfAnswersContainer;
-
-};
-
-function changeUIWhenNoMoreQuestions() {
-    questionsContainer.classList.add('hide');
-    btnNext.classList.add('hide');
-    playerNameInput.classList.remove('hide');
-    playerNameInput.classList.add('show');
-    btnSend.disabled = false;
-    btnSend.classList.remove('btn--disabled');
 };
 
 function isAnswerCorrect(answerCorrect, answerOfUser) {
@@ -252,7 +215,7 @@ function updateUI() {
     if (questions.length > 0) {
         showGameInterface();
     } else {
-        changeUIWhenNoMoreQuestions();
+        createView().changeUIWhenNoMoreQuestions();
         gameOver();
     }
     btnNext.disabled = true;
@@ -296,7 +259,7 @@ function saveDataOfPlayerInStorage() {
 };
 
 function manageDataOfPlayer() {
-    let playerName = playerNameInput.value;
+    let playerName = createView().getNameOfPlayer();
     let playerData = {
         name: playerName,
         score: `${score} puntos`
@@ -334,35 +297,22 @@ function hideStatistics() {
     statisticsContainer.classList.add('hide');
 };
 
-function updateUItoInitial() {
-    btnStart.disabled = false;
-    btnStart.classList.remove('btn--disabled');
-    gameContainer.classList.remove('show');
-    gameContainer.classList.add('hide');
-    playerNameInput.value = '';
-    playerNameInput.classList.remove('show');
-    playerNameInput.classList.add('hide');
-    btnSend.disabled = true;
-    btnSend.classList.add('btn--disabled');
-};
-
 function recapGame() {
     showStatistics();
     resetQuestions();
     manageDataOfPlayer();
-    updateUItoInitial();
+    createView().updateUItoInitial();
     resetStatistics();
 };
 
 function stopGame() {
-    updateUItoInitial();
+    createView().updateUItoInitial();
     stopTimer();
     resetQuestions();
 };
 
 return {
     getQuestionRamdon: getQuestionRamdon,
-    paintQuestions: paintQuestions,
     getInputValueAndCompare: getValuesToCompare,
     startApp
 };
