@@ -5,6 +5,8 @@ import store from "./store.js"
 
 
     
-Window.onload = createController().startApp();
+window.onload = () => {
+    createController().startApp();
+}
 
 

@@ -78,6 +78,7 @@ function onStartGame() {
 
 function showGameInterface() {
     createView().hideIntroductionInfo();
+    createView().updateUIOnStart();
     createView().paintQuestions(getQuestionRamdon());
 };
 

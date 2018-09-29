@@ -39,6 +39,10 @@ body {
 .__main{
     min-height: 100vh;
     padding-top: 149px;
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(40%, #f6f7f8), to(rgba(255, 0, 0, 0))), url(../img/imgdata13.jpg);
+    background: linear-gradient(to bottom right, #f6f7f8 40%, rgba(255, 0, 0, 0)), url(../images/puzzle.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .intro__container {
     display: flex;
@@ -48,10 +52,6 @@ body {
     min-height: 100vh;
     padding: 60px 20px;
     margin-bottom: -23px;
-    background: -webkit-gradient(linear, left top, right bottom, color-stop(40%, #f6f7f8), to(rgba(255, 0, 0, 0))), url(../img/imgdata13.jpg);
-    background: linear-gradient(to bottom right, #f6f7f8 40%, rgba(255, 0, 0, 0)), url(../images/puzzle.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
     color: black;
 }
 .intro__container--minim {
@@ -189,7 +189,8 @@ h2 {
     min-width: 25%;
     padding: 5px;
     text-align: left;
-    border: 1px solid #000;   
+    border: 1px solid #000;  
+    font-weight: bold; 
 }
 .records__table--player td:last-child {
     text-align: right;
@@ -216,8 +217,14 @@ h2 {
         flex-direction: row;
     }
     .game__main-contain {
-    flex-direction: row;
-    justify-content: space-between;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .score__container {
+        padding: 15px;
+        position: absolute;
+        right: 25px;
+        top: 175px;
     }
     
 }
