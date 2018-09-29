@@ -1,6 +1,7 @@
 export default function createGameView () {
 
-    const introContainer = document.getElementById('explanation-container');
+    const introContainer = document.getElementById('intro-container');
+    const explanationContainer = document.getElementById('explanation-container');
     const btnStart = document.getElementById('btn-start');
     const btnHide = document.getElementById('btn-hide');
     let gameContainer;
@@ -17,24 +18,25 @@ export default function createGameView () {
     // let btnStart;
 
     function prepareDOM () {
-        introContainer = document.getElementById('explanation-container');
+        explanationContainer = document.getElementById('explanation-container');
         btnStart = document.getElementById('btn-start');
         btnHide = document.getElementById('btn-hide');
     }
 
     function showIntroductionInfo() {
-        introContainer.classList.remove('hide');
-        introContainer.classList.add('show');
+        explanationContainer.classList.remove('hide');
+        introContainer.classList.remove('intro__container--minim');
+        explanationContainer.classList.add('show');
         btnHide.classList.remove('hide');
         btnHide.classList.add('show');
     };
 
     function hideIntroductionInfo() {
-        introContainer.classList.remove('show');
-        introContainer.classList.add('hide');
+        explanationContainer.classList.remove('show');
+        explanationContainer.classList.add('hide');
+        introContainer.classList.add('intro__container--minim');
         btnHide.classList.add('hide');
-        btnStart.disabled = true;
-        btnStart.classList.add('btn--disabled');
+        btnHide.classList.remove('show');
     };
 
     function paintQuestions(questionObtained) {
@@ -102,21 +104,20 @@ export default function createGameView () {
     }
 
     function renderRecords(records) {
-        let recordsPanel = records.map(player => {
-            return (
-                `<tr class="records__table--player">
-                <td class="player__name">${player.name}</td>
-                <td class="player__score">${player.score}</td>
-            </tr>`);
-
-        });
-        recordTable.innerHTML += recordsPanel;
+        for (let index = 0; index < records.length; index++) {
+            const itemFromRecords = `
+                <tr class="records__table--player" >
+                    <td class="player__cell">${records[index].name}</td>
+                    <td class="player__cell">${records[index].score}</td>
+                </tr >`;
+            recordTable.insertAdjacentHTML('afterbegin', itemFromRecords)
+        }
     };
 
     function paintDataOfPlayer(name, score) {
         let newPlayerRecord = `<tr class="records__table--player">
-                <td class="player__name">${name}</td>
-                <td class="player__score">${score} puntos</td>
+                <td class="player__cell">${name}</td>
+                <td class="player__cell">${score} puntos</td>
             </tr>`;
         recordTable.insertAdjacentHTML('afterbegin', newPlayerRecord);
     };
