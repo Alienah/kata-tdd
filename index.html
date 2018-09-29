@@ -8,15 +8,15 @@
     <link rel="stylesheet" href="./src/css/main.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
 </head>
-<body>
+<body class="body">
     <header class="__header container">
         <h1 class="header__title">Saber y Ganar Game</h1>
         <nav class="header__nav">
-            <a class="link-to-explanation" href="#explanation-container">Instrucciones</a>
+            <a class="link-to-explanation" id="link-to-explanation">Instrucciones</a>
         </nav>
     </header>
     <main class="__main container">
-        <div class="intro__container">
+        <div class="intro__container" id="intro-container">
             <div id="explanation-container" class="explanation__container">
                 <p class="explanation__text">Bienvenido a este divertido juego llamado "Saber y Ganar" en honor al programa de Jordi Hurtado.</p>
                 <ul class="explanation__list">La mecánica del juego es muy sencilla:
@@ -31,15 +31,14 @@
                 </ul>
             </div>
             <div class="btn--intro__container">
-                <button type="button" id="btn-hide" class="btn btn--hide">Ocultar instrucciones</button>
-                <button type="button" id="btn-start" class="btn btn--start">Empezar</button>
+                <button type="button" id="btn-hide" class="btn btn--yellow btn--container-info btn--hide">Ocultar instrucciones</button>
+                <button type="button" id="btn-start" class="btn btn--container-info btn--yellow btn--start">Empezar</button>
             </div>
            
         </div>
         
         <div class="game__main-contain">
-            <div id="game__container" class="game__container">
-               
+            <div id="game__container" class="game__container">               
                 <div class="questions__container">
                     <form name="form__container" class="questions__container-form" id="form_answers-container">
                         <h2 class="question__title-container">
@@ -59,8 +58,10 @@
                 <button type="button" id="btn-stop" class="btn btn--stop">Reset</button>
 
             </div>
-            <div class="score__container">
-                <table class="record__table"> <h2>Puntuaciones</h2>
+            <div class="score__container hide">
+                <h2 class="records__title">Puntuaciones</h2>
+                <!-- <ul class="record__table"></ul> -->
+                <table class="record__table">
                 </table>
             </div>
         </div>
