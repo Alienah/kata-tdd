@@ -12,6 +12,7 @@ export default function createGameView() {
     const btnSend = document.getElementById('btn-send');
     const scoreContainer = document.getElementById('score-container');
     const recordTable = document.querySelector('.record__table');
+    const statisticsContainer = document.getElementById('statistics_container');
 
     function show(element) {
         element.classList.remove('hide');
@@ -68,12 +69,29 @@ export default function createGameView() {
         msgResult.classList.remove('msg--incorrect');
         msgResult.classList.add('msg--correct');
         msgResult.innerHTML = 'Correcto!';
+        show(msgResult);
     };
 
     function showMsgWhenIsIncorrect() {
         msgResult.classList.remove('msg--correct');
         msgResult.classList.add('msg--incorrect');
         msgResult.innerHTML = 'Incorrecto :(';
+        show(msgResult);
+    };
+
+    function showStatistics(timeAverage, numberOfCorrects, numberOfIncorrects) {
+        const playerTime = document.getElementById('player-time');
+        playerTime.innerHTML = timeAverage;
+        const playerCorrectNumber = document.getElementById('player-correct');
+        playerCorrectNumber.innerHTML = numberOfCorrects;
+        const playerIncorrectNumber = document.getElementById('player-incorrect'); 
+        playerIncorrectNumber.innerHTML = numberOfIncorrects;        
+        show(statisticsContainer);
+    };
+
+    function hideContainersOnStart() {
+        hide(statisticsContainer);
+        hide(msgResult);
     };
 
     function changeUIWhenNoMoreQuestions() {
@@ -146,6 +164,8 @@ export default function createGameView() {
         updateUItoInitial,
         showMsgWhenIsIncorrect,
         changeUIWhenNoMoreQuestions,
+        showStatistics,
+        hideContainersOnStart,
         getNameOfPlayer,
         getAnswerOfPlayer,
         renderRecords,
