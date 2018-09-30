@@ -1,6 +1,4 @@
-import store from "./store.js";
-
-export default function createClient() {
+export default function createClient(store) {
 
     function getQuestions() {
         return (

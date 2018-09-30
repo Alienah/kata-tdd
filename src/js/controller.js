@@ -1,11 +1,6 @@
 export default function createController(client, view, store) {
     let questions = [];
     let questionObtained;
-    let linkToIntro;
-    let btnStart;
-    let btnNext;
-    let btnSend;
-    let btnStop;
     let seconds;
     let timer;
     let timerContainer;
@@ -20,30 +15,36 @@ function startApp() {
     seconds = 0;
     timer = null;
     score = 0;
-    linkToIntro = document.querySelector('.link-to-explanation');
-    linkToIntro.addEventListener('click', view.showIntroductionInfo);
-    const btnHide = document.getElementById('btn-hide');
-    btnHide.addEventListener('click', view.hideIntroductionInfo);
-    btnStart = document.getElementById('btn-start');
-    btnStart.addEventListener('click', onStartGame);
     timerContainer = document.getElementById('timer-container');
-    btnNext = document.getElementById('btn-next');
-    btnNext.disabled = true;
-    btnNext.classList.add('btn--disabled');
-    btnNext.addEventListener('click', goToNextQuestion);
-    btnSend = document.getElementById('btn-send');
-    btnSend.disabled = true;
-    btnSend.classList.add('btn--disabled');
-    btnSend.addEventListener('click', recapGame);
-    btnStop = document.getElementById('btn-stop');
-    btnStop.addEventListener('click', stopGame);
-    document.form__container.addEventListener('click', handleEventsOfRadios);
+    
+    subscribeButtonsToEvents();
     view.updateUItoInitial();
-
     saveQuestions();
     updateStore()
     view.renderRecords(store.records);
 };
+
+function subscribeButtonsToEvents (){
+    const linkToIntro = document.querySelector('.link-to-explanation');
+    linkToIntro.addEventListener('click', view.showIntroductionInfo);
+
+    const btnHide = document.getElementById('btn-hide');
+    btnHide.addEventListener('click', view.hideIntroductionInfo);
+
+    const btnStart = document.getElementById('btn-start');
+    btnStart.addEventListener('click', onStartGame);
+
+    const btnNext = document.getElementById('btn-next');
+    btnNext.addEventListener('click', goToNextQuestion);
+
+    const btnSend = document.getElementById('btn-send');
+    btnSend.addEventListener('click', recapGame);
+
+    const btnStop = document.getElementById('btn-stop');
+    btnStop.addEventListener('click', stopGame);
+
+    document.form__container.addEventListener('click', handleEventsOfRadios);
+}
 
 function saveQuestions() {
     client.getQuestions().then((data) => { questions = data })
@@ -51,7 +52,6 @@ function saveQuestions() {
 
 function updateStore() {
     store.records = client.getRecords();
-    console.log(store);
 }
 
 function onStartGame() {
@@ -106,12 +106,10 @@ function showScoreWhenNoAnswer() {
 
 function preventNextQuestion(targetRadio) {
     if (targetRadio.checked) {
-        btnNext.disabled = false;
-        btnNext.classList.remove('btn--disabled');
+        view.enableBtnNext();
     }
     else {
-        btnNext.disabled = true;
-        btnNext.classList.add('btn--disabled');
+        view.disableBtnNext();
     }
 };
 
@@ -189,8 +187,7 @@ function updateUI() {
         view.changeUIWhenNoMoreQuestions();
         gameOver();
     }
-    btnNext.disabled = true;
-    btnNext.classList.add('btn--disabled');
+    view.disableBtnNext();
     console.log(`Tiempo transcurrido ${seconds} segundos`);
     playerTimeTotal = playerTimeTotal + seconds;
 };

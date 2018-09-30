@@ -37,6 +37,14 @@ export default function createGameView() {
         element.classList.remove('btn--disabled');
     }
 
+    function enableBtnNext() {
+        enable(btnNext);
+    }
+
+    function disableBtnNext() {
+        disable(btnNext);
+    }
+
     function disable(element) {
         element.disabled = true;
         element.classList.add('btn--disabled');
@@ -163,6 +171,8 @@ export default function createGameView() {
         showMsgWhenIsCorrect,
         updateUItoInitial,
         showMsgWhenIsIncorrect,
+        enableBtnNext,
+        disableBtnNext,
         changeUIWhenNoMoreQuestions,
         showStatistics,
         hideContainersOnStart,
