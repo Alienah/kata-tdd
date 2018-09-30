@@ -4,22 +4,14 @@ export default function createGameView() {
     const explanationContainer = document.getElementById('explanation-container');
     const btnStart = document.getElementById('btn-start');
     const btnHide = document.getElementById('btn-hide');
-    let gameContainer = document.getElementById('game__container');
+    const gameContainer = document.getElementById('game__container');
     const questionsContainer = document.querySelector('.questions__container');
     const btnNext = document.getElementById('btn-next');
     const msgResult = document.getElementById('msg-result');
-    let playerNameInput = document.getElementById('player-name');
+    const playerNameInput = document.getElementById('player-name');
     const btnSend = document.getElementById('btn-send');
-    let scoreContainer = document.getElementById('score-container');
-    let recordTable = document.querySelector('.record__table');
-    // let btnHide;
-    // let btnStart;
-
-    // function prepareDOM () {
-    //     explanationContainer = document.getElementById('explanation-container');
-    //     btnStart = document.getElementById('btn-start');
-    //     btnHide = document.getElementById('btn-hide');
-    // }
+    const scoreContainer = document.getElementById('score-container');
+    const recordTable = document.querySelector('.record__table');
 
     function show(element) {
         element.classList.remove('hide');
