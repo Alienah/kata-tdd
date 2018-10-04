@@ -163,7 +163,6 @@ export default function createGameView() {
     };
 
     return ({
-        // prepareDOM,
         showIntroductionInfo,
         hideIntroductionInfo,
         updateUIOnStart,
