@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/Alienah/saberYganar#readme",
   "dependencies": {
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "puppeteer": "^1.9.0"
   },
   "devDependencies": {
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
