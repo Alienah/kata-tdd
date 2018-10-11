@@ -14,4 +14,4 @@ Then, lauch the server of the app and open the index.html file, for example with
 
 To lauch puppeteer test:
 
-- node __tests__/puppeTest.js
+- node __ tests __/puppeTest.js
