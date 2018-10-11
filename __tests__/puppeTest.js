@@ -16,7 +16,7 @@ const puppeteer = require('puppeteer');
     const browser = await puppeteer.launch({ headless: false, slowMo: 150 })
     const page = await browser.newPage()
 
-    await page.setViewport({ width: 768, height: 512 })
+    await page.setViewport({ width: 1024, height: 712 })
 
     await page.goto('http://127.0.0.1:5500/index.html')
 
